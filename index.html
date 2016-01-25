@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Document</title>
+  <link rel="stylesheet" href="bower_components/Honoka/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="node_modules/codemirror/lib/codemirror.css">
+  <link rel="stylesheet" href="node_modules/codemirror/theme/zenburn.css">
+  <link rel="stylesheet" href="lib/css/style.css">
+  <script src="node_modules/codemirror/lib/codemirror.js"></script>
+  <script src="node_modules/codemirror/addon/mode/overlay.js"></script>
+  <script src="node_modules/codemirror/mode/javascript/javascript.js"></script>
+</head>
+<body>
+
+  <header class="flex">
+    <div>
+      <input type="text" class="form-control"
+        data-bind="value: current, valueUpdate: 'afterkeydown'">
+    </div>
+    <div>
+      <p class="lead" data-bind="text: filename"></p>
+    </div>
+    <div>
+      <button class="btn btn-default btn-sm" id="refresh">
+        <span class="glyphicon glyphicon-refresh"></span>
+      </button>
+      <button class="btn btn-default btn-sm" id="saveSvg">
+        <span class="glyphicon glyphicon-save-file"></span> .SVG
+      </button>
+      <button class="btn btn-default btn-sm" id="savePng">
+        <span class="glyphicon glyphicon-save-file"></span> .PNG
+      </button>
+    </div>
+  </header>
+
+  <div id="content" class="flex">
+    <div id="menu">
+      <button class="btn btn-default btn-sm" id="file-list"
+        data-bind="click: switchListMode, css: { 'btn-primary': isActiveMode(0) }">
+        <span class="glyphicon glyphicon-list"></span>
+      </button>
+      <button class="btn btn-default btn-sm" id="edit-mode"
+        data-bind="click: switchEditMode, css: { 'btn-primary': isActiveMode(1) }">
+        <span class="glyphicon glyphicon-pencil"></span>
+      </button>
+      <button class="btn btn-default btn-sm" id="examples"
+        data-bind="click: switchSampleMode, css: { 'btn-primary': isActiveMode(2) }">
+        <span class="glyphicon glyphicon-question-sign"></span>
+      </button>
+    </div>
+
+    <div id="files"
+      data-bind="visible: mode() === 0">
+      <ul class="list-group"
+        data-bind="foreach: files">
+        <li class="list-group-item"
+          data-bind="text: relative, click: $root.select, css: { active: $root.isActive($data) }"
+        ></li>
+      </ul>
+    </div>
+
+    <div id="editor"
+      data-bind="visible: mode() === 0 || mode() === 1">
+      <textarea name="code" id="code"></textarea>
+    </div>
+
+    <div id="sample"
+      data-bind="visible: mode() === 2">
+      <p class="lead">samples</p>
+    </div>
+
+    <div id="preview"
+      data-bind="visible: mode() === 1 || mode() === 2">
+    </div>
+  </div>
+
+  <script src="lib/js/index.js"></script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+{
+  "name": "electron-viz",
+  "description": "",
+  "main": "main.js",
+  "authors": [
+    "Kazunori Kimura <kazunori.kimura.js@gmail.com>"
+  ],
+  "license": "MIT",
+  "moduleType": [
+    "node"
+  ],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "Honoka": "~3.3.6"
+  }
+}
