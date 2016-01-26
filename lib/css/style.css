@@ -9,7 +9,11 @@ html, body {
 header {
   height: 50px;
 }
-header div {
+header .filemenu {
+  width: calc((100% / 3) * 2);
+  padding: 10px;
+}
+header .previewmenu {
   width: calc(100% / 3);
   padding: 10px;
 }

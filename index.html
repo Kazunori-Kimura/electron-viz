@@ -16,14 +16,16 @@
 <body>
 
   <header class="flex">
-    <div>
+    <div class="filemenu">
       <input type="text" class="form-control"
-        data-bind="value: current, valueUpdate: 'afterkeydown'">
+        data-bind="value: current, valueUpdate: 'afterkeydown', disable: mode() == 2">
     </div>
-    <div>
-      <p class="lead" data-bind="text: filename"></p>
-    </div>
-    <div>
+    <div class="previewmenu">
+      <button class="btn btn-default" id="saveDot"
+        data-bind="click: saveDot">
+        <span class="glyphicon glyphicon-save-file"></span>
+      </button>
+      &nbsp;&nbsp;&nbsp;&nbsp;
       <button class="btn btn-default btn-sm" id="refresh">
         <span class="glyphicon glyphicon-refresh"></span>
       </button>
@@ -69,7 +71,12 @@
 
     <div id="sample"
       data-bind="visible: mode() === 2">
-      <p class="lead">samples</p>
+      <ul class="list-group"
+        data-bind="foreach: samples">
+        <li class="list-group-item"
+          data-bind="text: relative, click: $root.select, css: { active: $root.isActive($data) }"
+        ></li>
+      </ul>
     </div>
 
     <div id="preview"
