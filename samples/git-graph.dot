@@ -1,0 +1,24 @@
+// コミットグラフ
+digraph g {
+  graph [rankdir = BT]
+  
+  develop -> A -> B -> C -> D [weight = 5];
+  
+  A -> branch1 [label="checkout -b"];
+  branch1 -> c1 -> c2 [label="commit", weight = 4];
+  c2 -> B [label="merge"];
+  
+  c1 [label=""];
+  c2 [label=""];
+  
+  A -> branch2 [label="checkout -b"];
+  branch2 -> c3 -> c4 -> c5 [label="commit", weight = 4];
+  c5 -> C [label="merge"];
+  B -> c4 [label="pull"];
+  
+  c3 [label=""];
+  c4 [label=""];
+  c5 [label=""];
+  
+  {rank = same;branch1;branch2}
+}
