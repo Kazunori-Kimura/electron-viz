@@ -1,18 +1,28 @@
-// main.js
-"use strict";
-const app = require("app");
-const BrowserWindow = require("browser-window");
+'use strict';
+const electron = require('electron');
+const app = electron.app;  // Module to control application life.
+const BrowserWindow = electron.BrowserWindow;
 
-app.on("window-all-closed", () => {
-  if (process.platform != "darwin") {
+// メインウィンドウはGCされないようにグローバル宣言
+var mainWindow = null;
+
+// 全てのウィンドウが閉じたら終了
+app.on('window-all-closed', function() {
+  if (process.platform != 'darwin') {
     app.quit();
   }
 });
 
-app.on("ready", () => {
-  let mainWindow = new BrowserWindow({width: 800, height: 600});
-  mainWindow.loadURL(`file://${__dirname}/index.html`);
-  mainWindow.on("closed", () => {
+// Electronの初期化完了後に実行
+app.on('ready', function() {
+  // メイン画面の表示。ウィンドウの幅、高さを指定
+  mainWindow = new BrowserWindow({width: 1024, height: 768});
+  // デフォルトで開発ツールを開く
+  //mainWindow.openDevTools();
+  mainWindow.loadURL('file://' + __dirname + '/index.html');
+
+  // ウィンドウが閉じられたらアプリも終了
+  mainWindow.on('closed', function() {
     mainWindow = null;
   });
 });

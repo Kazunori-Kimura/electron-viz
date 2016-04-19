@@ -2,88 +2,45 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
+  <title>Document</title>
+  <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Document</title>
-  <link rel="stylesheet" href="bower_components/Honoka/dist/css/bootstrap.min.css">
+  <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="node_modules/codemirror/lib/codemirror.css">
   <link rel="stylesheet" href="node_modules/codemirror/theme/zenburn.css">
-  <link rel="stylesheet" href="lib/css/style.css">
-  <script src="node_modules/codemirror/lib/codemirror.js"></script>
-  <script src="node_modules/codemirror/addon/mode/overlay.js"></script>
-  <script src="node_modules/codemirror/mode/javascript/javascript.js"></script>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-  <header class="flex">
-    <div class="filemenu">
-      <input type="text" class="form-control"
-        data-bind="value: current, valueUpdate: 'afterkeydown', disable: mode() == 2">
-    </div>
-    <div class="previewmenu">
-      <button class="btn btn-default" id="saveDot"
-        data-bind="click: saveDot">
-        <span class="glyphicon glyphicon-save-file"></span>
-      </button>
-      &nbsp;&nbsp;&nbsp;&nbsp;
-      <button class="btn btn-default btn-sm" id="refresh">
-        <span class="glyphicon glyphicon-refresh"></span>
-      </button>
-      <button class="btn btn-default btn-sm" id="saveSvg">
-        <span class="glyphicon glyphicon-save-file"></span> .SVG
-      </button>
-      <button class="btn btn-default btn-sm" id="savePng">
-        <span class="glyphicon glyphicon-save-file"></span> .PNG
-      </button>
-    </div>
+  <header>
+    <form class="form-inline">
+      <div class="form-group">
+        <label for="openFile">ファイル</label>
+        <input type="text" class="form-control input-sm" id="openFile" value="C:\Users\z-kaduno\Documents\Repository\electron-viz\samples\git-graph.dot">
+      </div>
+      <button class="btn btn-default btn-sm" id="btnOpen"><u>O</u>pen DOT</button>
+      <button class="btn btn-default btn-sm" id="btnSave"><u>S</u>ave DOT</button>
+      <button class="btn btn-default btn-sm" id="btnExport"><u>E</u>xport SVG</button>
+      <button class="btn btn-default btn-sm" id="btnPreview"><u>P</u>review</button>
+      <button class="btn btn-default btn-sm" id="btnSync">AutoPreview</button>
+    </form>
   </header>
-
-  <div id="content" class="flex">
-    <div id="menu">
-      <button class="btn btn-default btn-sm" id="file-list"
-        data-bind="click: switchListMode, css: { 'btn-primary': isActiveMode(0) }">
-        <span class="glyphicon glyphicon-list"></span>
-      </button>
-      <button class="btn btn-default btn-sm" id="edit-mode"
-        data-bind="click: switchEditMode, css: { 'btn-primary': isActiveMode(1) }">
-        <span class="glyphicon glyphicon-pencil"></span>
-      </button>
-      <button class="btn btn-default btn-sm" id="examples"
-        data-bind="click: switchSampleMode, css: { 'btn-primary': isActiveMode(2) }">
-        <span class="glyphicon glyphicon-question-sign"></span>
-      </button>
+  <div class="content">
+    <div class="content-item">
+      <textarea name="editor" id="editor" cols="30" rows="10"></textarea>
     </div>
-
-    <div id="files"
-      data-bind="visible: mode() === 0">
-      <ul class="list-group"
-        data-bind="foreach: files">
-        <li class="list-group-item"
-          data-bind="text: relative, click: $root.select, css: { active: $root.isActive($data) }"
-        ></li>
-      </ul>
-    </div>
-
-    <div id="editor"
-      data-bind="visible: mode() === 0 || mode() === 1">
-      <textarea name="code" id="code"></textarea>
-    </div>
-
-    <div id="sample"
-      data-bind="visible: mode() === 2">
-      <ul class="list-group"
-        data-bind="foreach: samples">
-        <li class="list-group-item"
-          data-bind="text: relative, click: $root.select, css: { active: $root.isActive($data) }"
-        ></li>
-      </ul>
-    </div>
-
-    <div id="preview"
-      data-bind="visible: mode() === 1 || mode() === 2">
-    </div>
+    <div class="content-item" id="preview"></div>
   </div>
-
-  <script src="lib/js/index.js"></script>
+  <footer>
+    <p id="message">footer</p>
+  </footer>
+  
+  <script>
+    // require jquery
+    window.jQuery = window.$ = require("jquery");
+  </script>
+  <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="node_modules/codemirror/lib/codemirror.js"></script>
+  <script src="index.js"></script>
 </body>
 </html>
