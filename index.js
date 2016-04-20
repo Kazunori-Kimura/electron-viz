@@ -7,6 +7,7 @@ const parser = new DOMParser();
 
 $(function(){
   let timer = 0;
+  let isEdit = false;
   
   // codemirrorのインスタンス化
   const editor = CodeMirror.fromTextArea(document.getElementById("editor"), {
@@ -15,9 +16,9 @@ $(function(){
     matchBrackets: true
   });
   
+  // 変更があったら更新処理
   editor.on("change", () => {
-    // 変更されたらpreview更新
-    
+    isEdit = true;
   });
   
   // open: ファイル選択ダイアログを表示
@@ -80,6 +81,7 @@ $(function(){
         return;
       }
       const svg = updatePreview(data);
+      // save svg file
       yield fs.outputFileAsync(svgFilePath, svg, "utf8");
     }).catch((err) => {
       console.error(err);
@@ -93,26 +95,37 @@ $(function(){
     updatePreview(data, $("#preview"));
   });
   
-  // auto preview
+  // auto preview: 自動更新モードのtoggle
   $("#btnSync").on("click", (ev) => {
     ev.preventDefault();
     $(ev.target).toggleClass("active").blur();
+    
+    if ($(ev.target).hasClass("active")) {
+      timer = setInterval(() => {
+        if (isEdit) {
+          const data = editor.getValue();
+          updatePreview(data, $("#preview"));
+        }
+      }, 500);
+    } else {
+      clearInterval(timer);
+      timer = 0;
+    }
   });
   
   /**
    * preview更新
    */
   function updatePreview(dot, canvas){
-    // parse dot
+    // parse dot -> svg
     const xml = viz(dot, { format: "svg", engine: "dot" });
-    
     // canvas に svgタグをappend
     if (canvas) {
       const svg = parser.parseFromString(xml, "image/svg+xml");
       canvas.find("svg").remove();
       canvas.append(svg.documentElement);
+      isEdit = false; //変更反映済み
     }
-    
     return xml;
   }
 });

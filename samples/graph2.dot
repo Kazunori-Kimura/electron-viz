@@ -7,7 +7,7 @@ digraph G {
   s3[label="ZZZ"];
   srv[label="通信\n(サービス)"];
   api[label="API\n(Tomcat,\nJavaEE)"];
-  web[label="Web\n(Node.js,\nKoa)"];
+  web[label="Web\n(Node.js,\nKoa,\ni18n)"];
   c1[label="PC" shape=ellipse];
   c2[label="Tablet" shape=ellipse];
   apache[label="Apache\n(mod_proxy)"];
