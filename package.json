@@ -4,7 +4,9 @@
   "description": "electron で作成した graphviz のビューア/エディタ。",
   "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron .",
+    "build": "node build.js"
   },
   "keywords": [],
   "author": "Kazunori Kimura <kazunori.kimura.js@gmail.com>",
@@ -19,10 +21,10 @@
     "jquery": "^2.2.3",
     "viz.js": "^1.3.0"
   },
-  "directories": {
-    "test": "test"
+  "devDependencies": {
+    "electron-packager": "^7.0.0",
+    "electron-prebuilt": "^0.37.6"
   },
-  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Kazunori-Kimura/electron-viz.git"
