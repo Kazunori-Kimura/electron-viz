@@ -14,12 +14,6 @@ header {
 #openFile {
   width: 40vw;
 }
-footer {
-  height: 40px;
-  background-color: #50514F;
-  color: #F4F3EE;
-  padding: 5px;
-}
 
 .content {
   flex: 1;
@@ -30,10 +24,10 @@ footer {
 }
 #preview {
   background-color: #DFE0E2;
-  max-height: calc(100vh - 80px);
+  max-height: calc(100vh - 40px);
   overflow: auto;
 }
 .CodeMirror {
   border: 1px solid #50514F;
-  height: calc(100vh - 80px);
+  height: calc(100vh - 40px);
 }

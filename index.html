@@ -15,25 +15,23 @@
   <header>
     <form class="form-inline">
       <div class="form-group">
-        <label for="openFile">ファイル</label>
-        <input type="text" class="form-control input-sm" id="openFile" value="C:\Users\z-kaduno\Documents\Repository\electron-viz\samples\git-graph.dot">
+        <label for="openFile" class="sr-only">ファイル</label>
+        <input type="text" class="form-control input-sm" id="openFile" placeholder="ファイル">
       </div>
-      <button class="btn btn-default btn-sm" id="btnOpen"><u>O</u>pen DOT</button>
-      <button class="btn btn-default btn-sm" id="btnSave"><u>S</u>ave DOT</button>
-      <button class="btn btn-default btn-sm" id="btnExport"><u>E</u>xport SVG</button>
-      <button class="btn btn-default btn-sm" id="btnPreview"><u>P</u>review</button>
+      <button class="btn btn-default btn-sm" id="btnNew">New DOT</button>
+      <button class="btn btn-default btn-sm" id="btnOpen">Open DOT</button>
+      <button class="btn btn-default btn-sm" id="btnSave">Save DOT</button>
+      <button class="btn btn-default btn-sm" id="btnExport">Export SVG</button>
+      <button class="btn btn-default btn-sm" id="btnPreview">Preview</button>
       <button class="btn btn-default btn-sm" id="btnSync">AutoPreview</button>
     </form>
   </header>
   <div class="content">
     <div class="content-item">
-      <textarea name="editor" id="editor" cols="30" rows="10"></textarea>
+      <textarea name="editor" id="editor"></textarea>
     </div>
     <div class="content-item" id="preview"></div>
   </div>
-  <footer>
-    <p id="message">footer</p>
-  </footer>
   
   <script>
     // require jquery
