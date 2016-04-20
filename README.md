@@ -1,8 +1,12 @@
-# viz-editor
+# electron-viz
 
 electron で作成した graphviz のビューア/エディタ。
 
 ![ss](ss.png)
+
+* dotファイルをsvgに変換し、表示します。
+* エディタ部分で編集した内容がリアルタイムに反映されます。
+* svgファイルを保存します。
 
 ## TODO
 
