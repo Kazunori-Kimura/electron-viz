@@ -13,6 +13,8 @@ co(function*(){
   yield pack();
   
   console.log("done!");
+}).catch((err) => {
+  console.error(err);
 });
 
 function pack(){

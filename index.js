@@ -10,6 +10,12 @@ $(function(){
   let timer = 0;
   let isEdit = false;
   
+  /**
+   * 表示されているSVGの元サイズ
+   * @type {object}
+   */
+  const svgSize = { "width": 100, "height": 100 };
+  
   // codemirrorのインスタンス化
   const editor = CodeMirror.fromTextArea(document.getElementById("editor"), {
     lineNumbers: true,
@@ -158,8 +164,20 @@ $(function(){
     }
   });
   
+  // zoom rate
+  $("#zoomRateList a").on("click", (ev) => {
+    const rawRate = $(ev.target).text();
+    $("#zoomRate").text(rawRate);
+    
+    // zoom処理
+    zoomSVG(rawRate);
+  });
+  
   /**
    * preview更新
+   * @param {string} dot - dotの元データ
+   * @param {object} canvas - svgを追加するjqueryオブジェクト
+   * @returns {string} dotから生成されたsvg
    */
   function updatePreview(dot, canvas){
     // parse dot -> svg
@@ -170,7 +188,36 @@ $(function(){
       canvas.find("svg").remove();
       canvas.append(svg.documentElement);
       isEdit = false; //変更反映済み
+      
+      // svgのサイズを保持する
+      const $svg = $("svg");
+      if ($svg.length === 1) {
+        const rawWidth = $svg.attr("width");
+        const rawHeight = $svg.attr("height");
+        svgSize.width = rawWidth ? parseInt(rawWidth.replace("pt", ""), 10) : 100;
+        svgSize.height = rawHeight ? parseInt(rawHeight.replace("pt", ""), 10) : 100;
+        
+        // 指定された比率に width/height を更新
+        zoomSVG($("#zoomRate").text());
+      }
     }
     return xml;
   }
+  
+  /**
+   * svgの表示サイズを指定された比率に変更する
+   * @param {string} rawRate - 50%, 75%, 100%, 125%, 150% のいずれか
+   */
+  function zoomSVG(rawRate){
+    const $svg = $("svg");
+    if ($svg.length === 1) {
+      const rate = parseInt(rawRate.replace("%", ""), 10) / 100;
+      
+      $svg.attr("width", `${svgSize.width * rate}pt`);
+      $svg.attr("height", `${svgSize.height * rate}pt`);
+    }
+  }
+  
+  // デフォルトでauto previewをonにする
+  $("#btnSync").click();
 });
