@@ -32,3 +32,10 @@ header {
   border: 1px solid #50514F;
   height: calc(100vh - 40px);
 }
+
+.alert-message-area {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  padding: 10px;
+}
