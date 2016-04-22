@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
   <meta charset="UTF-8">
   <title>electron-viz</title>
@@ -10,6 +11,7 @@
   <link rel="stylesheet" href="node_modules/codemirror/theme/zenburn.css">
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
   <header>
     <form class="form-inline">
@@ -17,16 +19,15 @@
         <label for="openFile" class="sr-only">ファイル</label>
         <input type="text" class="form-control input-sm" id="openFile" placeholder="ファイル">
       </div>
-      <button class="btn btn-default btn-sm" id="btnNew">New DOT</button>
-      <button class="btn btn-default btn-sm" id="btnOpen">Open DOT</button>
-      <button class="btn btn-default btn-sm" id="btnSave">Save DOT</button>
+      <button class="btn btn-default btn-sm" id="btnNew"><u>N</u>ew DOT</button>
+      <button class="btn btn-default btn-sm" id="btnOpen"><u>O</u>pen DOT</button>
+      <button class="btn btn-default btn-sm" id="btnSave"><u>S</u>ave DOT</button>
       <button class="btn btn-default btn-sm" id="btnExport">Export SVG</button>
-      <button class="btn btn-default btn-sm" id="btnPreview">Preview</button>
+      <button class="btn btn-default btn-sm" id="btnPreview"><u>P</u>review</button>
       <button class="btn btn-default btn-sm" id="btnSync">AutoPreview</button>
       <div class="form-group">
         <div class="btn-group">
-          <button class="btn btn-default btn-sm dropdown-toggle"
-            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <button class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <span class="glyphicon glyphicon-zoom-in"></span>
             <span id="zoomRate">100%</span>
             <span class="caret"></span>
@@ -48,7 +49,9 @@
     </div>
     <div class="content-item" id="preview"></div>
   </div>
-  
+
+  <div id="message-area" class="alert-message-area"></div>
+
   <script>
     // require jquery
     window.jQuery = window.$ = require("jquery");
@@ -57,4 +60,5 @@
   <script src="node_modules/codemirror/lib/codemirror.js"></script>
   <script src="index.js"></script>
 </body>
+
 </html>

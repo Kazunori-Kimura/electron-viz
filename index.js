@@ -6,6 +6,7 @@ const co = require("co");
 const viz = require("viz.js");
 const parser = new DOMParser();
 const keys = require("./keycode.json");
+const Msg = require("./message");
 
 $(function(){
   let timer = 0;
@@ -50,6 +51,9 @@ $(function(){
         editor.setValue("");
         $("#preview").find("svg").remove();
       }
+    }).catch((err) => {
+      const msg = new Msg("error", err.message);
+      msg.show();
     });
   });
   
@@ -72,7 +76,8 @@ $(function(){
         updatePreview(data, $("#preview"));
       }
     }).catch((err) => {
-      console.error(err);
+      const msg = new Msg("error", err.message);
+      msg.show();
     });
   });
   
@@ -97,9 +102,11 @@ $(function(){
       // ファイル書き込み
       const data = editor.getValue();
       yield fs.outputFileAsync(filePath, data, "utf8");
-      console.log(`saved: ${filePath}.`);
+      const msg = new Msg("success", `DOTファイルを保存しました: ${filePath}`, 3000);
+      msg.show();
     }).catch((err) => {
-      console.error(err);
+      const msg = new Msg("error", err.message);
+      msg.show();
     });
   });
   
@@ -132,9 +139,11 @@ $(function(){
       const svg = updatePreview(data);
       // save svg file
       yield fs.outputFileAsync(svgFilePath, svg, "utf8");
-      console.log(`saved: ${svgFilePath}.`);
+      const msg = new Msg("success", `SVGファイルを保存しました: ${svgFilePath}`, 3000);
+      msg.show();
     }).catch((err) => {
-      console.error(err);
+      const msg = new Msg("error", err.message);
+      msg.show();
     });
   });
   
@@ -161,6 +170,9 @@ $(function(){
       clearInterval(timer);
       timer = 0;
     }
+    
+    const msg = new Msg("info", `自動更新: ${$(ev.target).hasClass("active") ? "ON" : "OFF"}`, 3000);
+    msg.show();
   });
   
   // zoom rate
