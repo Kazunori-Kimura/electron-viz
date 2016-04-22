@@ -5,6 +5,7 @@ const myUtil = require("./my-util.js");
 const co = require("co");
 const viz = require("viz.js");
 const parser = new DOMParser();
+const keys = require("./keycode.json");
 
 $(function(){
   let timer = 0;
@@ -122,8 +123,6 @@ $(function(){
       }
       // svg file
       const svgFilePath = dotFilePath.replace(/\.dot$/, ".svg");
-      // png file
-      const pngFilePath = dotFilePath.replace(/\.dot$/, ".png");
       
       // save dot file
       const data = editor.getValue();
@@ -217,6 +216,30 @@ $(function(){
       $svg.attr("height", `${svgSize.height * rate}pt`);
     }
   }
+  
+  // ショートカットキーの設定
+  $(window).on("keydown", (ev) => {
+    if (ev.ctrlKey || ev.metaKey) {
+      switch(ev.keyCode) {
+        case keys.N:
+          $("#btnNew").click();
+          return false;
+        case keys.O:
+          $("#btnOpen").click();
+          return false;
+        case keys.P:
+          $("#btnPreview").click();
+          return false;
+        case keys.S:
+          $("#btnSave").click();
+          return false;
+        case keys.Enter:
+          $("#btnExport").click();
+          return false;
+      }
+    }
+    return true;
+  });
   
   // デフォルトでauto previewをonにする
   $("#btnSync").click();

@@ -10,7 +10,8 @@ electron で作成した graphviz のビューア/エディタ。
 
 ## TODO
 
-* ショートカットキーの実装
+* ~~ショートカットキーの実装~~
+* Mac向けバイナリの作成
 
 ## 参考
 
@@ -19,6 +20,7 @@ electron で作成した graphviz のビューア/エディタ。
 * [electron](http://electron.atom.io/)
 * [Graphvizとdot言語でグラフを描く方法のまとめ](http://qiita.com/rubytomato@github/items/51779135bc4b77c8c20d)
 * http://www.showa-corp.jp/special/graphtools/graphviz.html
+* [JavaScript での Windows Ctrl キーと Mac Command キーの判定](http://hacknote.jp/archives/7321/)
 
 ## LICENSE
 
