@@ -53,8 +53,11 @@
   <div id="message-area" class="alert-message-area"></div>
 
   <script>
-    // require jquery
+    // electronでjqueryを読み込むための記述
     window.jQuery = window.$ = require("jquery");
+    // viz.jsの読み込み
+    // https://github.com/mdaines/viz.js/issues/59 の対策
+    window.viz = require("viz.js");
   </script>
   <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
   <script src="node_modules/codemirror/lib/codemirror.js"></script>
