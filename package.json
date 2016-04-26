@@ -1,6 +1,6 @@
 {
   "name": "electron-viz",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "electron で作成した graphviz のビューア/エディタ。",
   "main": "main.js",
   "scripts": {
