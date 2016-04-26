@@ -3,7 +3,7 @@ const fs = require("electron").remote.require("fs-extra-promise");
 const dialog = require("@kazunori-kimura/electron-dialog-promise");
 const myUtil = require("./my-util.js");
 const co = require("co");
-const viz = require("viz.js");
+let viz = require("viz.js");
 const parser = new DOMParser();
 const keys = require("./keycode.json");
 const Msg = require("./message");
@@ -11,6 +11,9 @@ const Msg = require("./message");
 $(function(){
   let timer = 0;
   let isEdit = false;
+  
+  let errorCount = 0; //viz.jsのエラー回数
+  let callCount = 0;  //updatePreviewの再帰呼び出し回数
 
   /**
    * 表示されているSVGの元サイズ
@@ -192,16 +195,31 @@ $(function(){
    * @param {object} canvas - svgを追加するjqueryオブジェクト
    * @returns {string} dotから生成されたsvg
    */
-  function updatePreview(dot, canvas){
+  function updatePreview(dot, canvas) {
+    // 無限ループを回避するため、50回連続で再帰呼び出しされたら
+    // 問答無用で終了する
+    callCount++;
+    if (callCount > 50) {
+      return undefined;
+    }
+    
     // parse dot -> svg
     if (dot == "") {
       isEdit = false; //変更反映済み
       return undefined;
     }
+    
     try {
       const xml = viz(dot, { format: "svg", engine: "dot" });
+      if (xml) {
+        // 正常に変換 -> エラー回数リセット
+        errorCount = 0;
+      } else {
+        return undefined;
+      }
+      
       // canvas に svgタグをappend
-      if (xml && canvas) {
+      if (canvas) {
         const svg = parser.parseFromString(xml, "image/svg+xml");
         canvas.find("svg").remove();
         canvas.append(svg.documentElement);
@@ -217,12 +235,25 @@ $(function(){
 
           // 指定された比率に width/height を更新
           zoomSVG($("#zoomRate").text());
-        } else {
-          return undefined;
         }
       }
+      
+      // 正常終了 -> 再帰呼び出し回数リセット
+      callCount = 0;
       return xml;
     } catch(err) {
+      errorCount++;
+      // errorカウントが20を超えたら viz.js を読み込みなおす
+      // https://github.com/mdaines/viz.js/issues/59 の対策
+      // (エラー回数20 は適当)
+      if (errorCount > 20) {
+        viz = undefined;
+        viz = require("viz.js");
+        errorCount = 0;
+        // 実行し直し
+        return updatePreview(dot, canvas);
+      }
+      
       isEdit = false; //変更反映済み
       return undefined;
     }
