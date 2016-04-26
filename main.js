@@ -18,7 +18,7 @@ app.on('ready', function() {
   // メイン画面の表示。ウィンドウの幅、高さを指定
   mainWindow = new BrowserWindow({width: 1024, height: 768});
   // デフォルトで開発ツールを開く
-  // mainWindow.openDevTools();
+  //mainWindow.openDevTools();
   mainWindow.loadURL('file://' + __dirname + '/index.html');
 
   installMenu();
