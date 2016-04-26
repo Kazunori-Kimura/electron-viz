@@ -137,10 +137,12 @@ $(function(){
         return;
       }
       const svg = updatePreview(data);
-      // save svg file
-      yield fs.outputFileAsync(svgFilePath, svg, "utf8");
-      const msg = new Msg("success", `SVGファイルを保存しました: ${svgFilePath}`, 3000);
-      msg.show();
+      if (svg) {
+        // save svg file
+        yield fs.outputFileAsync(svgFilePath, svg, "utf8");
+        const msg = new Msg("success", `SVGファイルを保存しました: ${svgFilePath}`, 3000);
+        msg.show();
+      }
     }).catch((err) => {
       const msg = new Msg("error", err.message);
       msg.show();
@@ -221,8 +223,6 @@ $(function(){
       }
       return xml;
     } catch(err) {
-      const msg = new Msg("warn", `不正な構文です`, 2000);
-      msg.show();
       isEdit = false; //変更反映済み
       return undefined;
     }
