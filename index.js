@@ -3,7 +3,7 @@ const fs = require("electron").remote.require("fs-extra-promise");
 const dialog = require("@kazunori-kimura/electron-dialog-promise");
 const myUtil = require("./my-util.js");
 const co = require("co");
-const viz = require("viz.js");
+//let viz = require("viz.js");
 const parser = new DOMParser();
 const keys = require("./keycode.json");
 const Msg = require("./message");
@@ -137,10 +137,12 @@ $(function(){
         return;
       }
       const svg = updatePreview(data);
-      // save svg file
-      yield fs.outputFileAsync(svgFilePath, svg, "utf8");
-      const msg = new Msg("success", `SVGファイルを保存しました: ${svgFilePath}`, 3000);
-      msg.show();
+      if (svg) {
+        // save svg file
+        yield fs.outputFileAsync(svgFilePath, svg, "utf8");
+        const msg = new Msg("success", `SVGファイルを保存しました: ${svgFilePath}`, 3000);
+        msg.show();
+      }
     }).catch((err) => {
       const msg = new Msg("error", err.message);
       msg.show();
@@ -190,16 +192,21 @@ $(function(){
    * @param {object} canvas - svgを追加するjqueryオブジェクト
    * @returns {string} dotから生成されたsvg
    */
-  function updatePreview(dot, canvas){
+  function updatePreview(dot, canvas) {
     // parse dot -> svg
     if (dot == "") {
       isEdit = false; //変更反映済み
       return undefined;
     }
+    
     try {
       const xml = viz(dot, { format: "svg", engine: "dot" });
+      if (!xml) {
+        return undefined;
+      }
+      
       // canvas に svgタグをappend
-      if (xml && canvas) {
+      if (canvas) {
         const svg = parser.parseFromString(xml, "image/svg+xml");
         canvas.find("svg").remove();
         canvas.append(svg.documentElement);
@@ -215,14 +222,10 @@ $(function(){
 
           // 指定された比率に width/height を更新
           zoomSVG($("#zoomRate").text());
-        } else {
-          return undefined;
         }
       }
       return xml;
     } catch(err) {
-      const msg = new Msg("warn", `不正な構文です`, 2000);
-      msg.show();
       isEdit = false; //変更反映済み
       return undefined;
     }
